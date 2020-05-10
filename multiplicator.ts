@@ -4,7 +4,7 @@
   
 //   multiplicator(2, 4, 'Multiplied numbers 2 and 4, the result is:');
 
-interface MultiplyValues {
+/* interface MultiplyValues {
     value1: number;
     value2: number;
   }
@@ -30,7 +30,7 @@ const multiplicator = (a: number, b: number, printText: string) => {
   } catch (e) {
     console.log('Error, something bad happened, message: ', e.message);
   }
-
+ */
 //   const a: number = Number(process.argv[2])
 // const b: number = Number(process.argv[3])
 // multiplicator(a, b, `Multiplied ${a} and ${b}, the result is:`);
