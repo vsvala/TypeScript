@@ -1,4 +1,4 @@
-//9.3 Command line
+// 9.3 Command line
 
  interface  calculateBmi{
     height:number
@@ -17,8 +17,7 @@ const parseArguments = (args: Array<string>):calculateBmi => {
     if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
       return {
        height:Number(args[2]),
-       weight:Number(args[3])
-        
+       weight:Number(args[3])  
       
       }
     } else {
@@ -117,12 +116,12 @@ const parseArguments = (args: Array<string>):calculateBmi => {
                                           calculateBmi (height, weight)
                                         } catch (e) {
                                         //  console.log('Error, something bad happened, message: ', e.message)           
-                                        var result={
-                                          weight:weight,
-                                          height:height,
-                                          bmi: JSON. stringify(e.message)
+                                        var errorResult={
+                                         // weight:weight,
+                                        //  height:height,
+                                        error: JSON. stringify(e.message)
                                           }
-                                        return result
+                                        return errorResult
                                       }
    }
                         
