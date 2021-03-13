@@ -1,8 +1,8 @@
-//9.3 Command line
+ //9.3 Command line
 
-interface Exercises{
-   exercises:number[]
-  }
+// interface Exercises{
+//    exercises:number[]
+//   }
 interface Result {
     periodLength:number,
     trainingDays:number,
@@ -12,98 +12,98 @@ interface Result {
     rating:number,
     ratingDescription:string
   }
-  var targ=0
 
-  const parseArgumentss = (args: Array<string>): Exercises =>{
-    if (args.length < 3) throw new Error('Not enough arguments')
-      //  console.log(args) 
-    var ex =[]
 
-     for (var i = 3; i < args.length; i++) {
-          if (!isNaN(Number(args[i]))) {  
-           //   console.log( Number(args[i])+"tää")
-                ex.push(Number(args[i]))
-            }
-            else {
-                throw new Error('All provided values were not numbers!');
-              }
-        }    
-    console.log( ex)  
-     var exercises=ex
-    targ= Number(args[2])
-      return {     
-       exercises
+  // const parseArgumentss = (args: Array<string>): Exercises =>{
+  //   if (args.length < 3) throw new Error('Not enough arguments')
+  //     //  console.log(args) 
+  //   var ex =[]
+
+  //    for (var i = 3; i < args.length; i++) {
+  //         if (!isNaN(Number(args[i]))) {  
+  //          //   console.log( Number(args[i])+"tää")
+  //               ex.push(Number(args[i]))
+  //           }
+  //           else {
+  //               throw new Error('All provided values were not numbers!');
+  //             }
+  //       }    
+  //   console.log( ex)  
+  //    var exercises=ex
+  //   targ= Number(args[2])
+  //     return {     
+  //      exercises
  
-    }
-  }
+  //   }
+  // }
 
 
-const calculateExercises=(exercises:number[]):Result=>{
-var predicate = (x:number) => x > 0;
-const trainingDays= exercises.filter(predicate)
+export const calculateExercises=(exercises:number[], target:number):Result=>{
 
-var sum = exercises.reduce(function(a, b) { return a + b; }, 0);
 
-const average=sum/ exercises.length
+const predicate = (x:number) => x > 0;
+const trainingDays= exercises.filter(predicate);
+
+const sum = exercises.reduce(function(a, b) { return a + b; }, 0);
+
+const average=sum/ exercises.length;
 
 const ratingDescription=()=>{
 if(average<1){
- return  'Where is yor MOTIVATION!!!'
+ return  'Where is yor MOTIVATION!!!';
  }
- if (average<targ){
-return 'Not too bad but could be better'
+ if (average<target){
+return 'Not too bad but could be better';
 
 }
  else {
-return    'Well done'
- }}
-
-
+return    'Well done';
+ }};
 
 
  const succes =()=>{
     if(average<1){
-      return false
+      return false;
      }
-    else if (average<targ){
-      return false
+    else if (average<target){
+      return false;
     }
      else {
-    return true
-     }}
+    return true;
+     }};
     
      const rate =()=>{
         if(average<1){
-          return 0
+          return 0;
          }
-        else if (average<targ){
-          return 2
+        else if (average<target){
+          return 2;
         }
          else {
-        return 3
-         }}
+        return 3;
+         }};
         
     
 
-    var result={
+    const result={
         periodLength: exercises.length,
         trainingDays:trainingDays.length,
-        target:targ,
+        target:target,
         average:average,
         success:succes(),
         rating:rate(),
         ratingDescription:ratingDescription(),
-    }
-    console.log(result)
-    return result
-  
-}
-try {
-    const { exercises } = parseArgumentss(process.argv);
-   calculateExercises(exercises)
-  } catch (e) {
-    console.log('Error, something bad happened, message: ', e.message);
-  }
+    };
+    console.log(result);
+    return result; 
+};
+
+// try {
+//     const { exercises } = parseArgumentss(process.argv);
+//    calculateExercises(exercises)
+//   } catch (e) {
+//     console.log('Error, something bad happened, message: ', e.message);
+//   }
 
 
 

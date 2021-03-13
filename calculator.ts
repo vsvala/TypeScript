@@ -1,4 +1,4 @@
-type Operation = 'multiply' | 'add' | 'divide';
+ type Operation = 'multiply' | 'add' | 'divide';
 
 type Resu = number;
 
@@ -14,10 +14,15 @@ export const calculator = (a: number, b: number, op : Operation) : Resu => {
       default:
         throw new Error('Operation is not multiply, add or divide!');
     }
-  }
+  };
 
   try {
-    console.log(calculator(1, 5 , 'divide'))
+    console.log(calculator(1, 5 , 'divide'));
   } catch (e) {
-    console.log('Something went wrong, error message: ', e.message);
+    if (e instanceof Error){
+      console.log('Something went wrong, error message: ', e.message);
+    }else{
+      throw e;
+    }
+  
   }
