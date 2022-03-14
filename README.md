@@ -351,3 +351,26 @@ app.post('/calculate', (req, res) => {
   // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment 
   const { value1, value2, op } = req.body;
  ```
+# Setting up the project2
+
+One major change from the previous part is that we're not going to use ts-node anymore. It is a handy tool that helps you get started, but in the long run it is advisable to use the official TypeScript compiler that comes with the typescript npm-package. The official compiler generates and packages JavaScript files from the .ts files so that the built production version won't contain any TypeScript code anymore. This is the exact outcome we are aiming for, since TypeScript itself is not executable by browsers or Node.
+
+run npm init and install the typescript package as a dev dependency.
+
+ ` npm install typescript --save-dev `
+ 
+ TypeScript's Native Compiler (tsc) can help us initialize our project by generating our tsconfig.json file. First, we need to add the tsc command to the list of executable scripts in package.json (unless you have installed typescript globally). Even if you installed TypeScript globally, you should always add it as a dev dependency to your project.
+
+The npm script for running tsc is set as follows:
+```
+{
+  // ..
+  "scripts": {
+    "tsc": "tsc"
+  },
+  // ..
+}
+```
+We can now initialise our tsconfig.json settings by running:
+
+`npm run tsc -- --init`
