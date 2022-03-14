@@ -168,3 +168,59 @@ try {
   }
   console.log(errorMessage);
 ```
+# tsconfig
+```
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "strict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "esModuleInterop": true,
+    "moduleResolution": "node"
+  }
+}
+```
+https://www.staging-typescript.org/tsconfig
+http://json.schemastore.org/tsconfig
+
+# Add express
+`npm install express`
+and then add the start script to package.json:
+```
+{
+  // ..
+  "scripts": {
+    "ts-node": "ts-node",
+    "multiply": "ts-node multiplier.ts",
+    "calculate": "ts-node calculator.ts",
+    "start": "ts-node index.ts"
+  },
+  // ..
+}
+```
+Now we can create the file index.ts, and write the HTTP GET ping endpoint to it:
+```
+import express from 'express'
+const express = require('express');
+const app = express();
+
+app.get('/ping', (req, res) => {
+  res.send('pong');
+});
+
+const PORT = 3003;
+
+app.listen(PORT, () => {
+  console.log(`Server running on port ${PORT}`);
+});
+```
+Install types for express
+
+`npm install --save-dev @types/express`
+
+always use this method in the frontend. If import does not work, try a combined method: import ... = require('...').
+
+If it is absolutely impossible to get rid of an unused variable, you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do.  Rename the req variable to _req. 
