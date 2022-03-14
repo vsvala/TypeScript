@@ -374,3 +374,103 @@ The npm script for running tsc is set as follows:
 We can now initialise our tsconfig.json settings by running:
 
 `npm run tsc -- --init`
+
+tsconfig.json file 
+
+```
+{
+  "compilerOptions": {
+    "target": "ES6",     //compiler which ECMAScript version to use when generating JavaScript. ES6 
+    "outDir": "./build/",     //outDir tells where the compiled code should be placed.
+    "module": "commonjs",//tells the compiler that we want to use CommonJS modules in the compiled code.we can use the old require syntax instead of import one
+    "strict": true,
+    "noUnusedLocals": true, //noUnusedLocals prevents having unused local variables, and noUnusedParameters throws an error if a function has unused parameters.
+    "noUnusedParameters": true, 
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,noFallthroughCasesInSwitch ensures that, in a switch case, each case ends either with a return or a break statement.
+    "esModuleInterop": true esModuleInterop allows interoperability between CommonJS and ES Modules
+
+  }
+```
+strict is actually a shorthand for multiple separate options: noImplicitAny, noImplicitThis, alwaysStrict, strictBindCallApply, strictNullChecks, strictFunctionTypes and strictPropertyInitialization. They guide our coding style to use the TypeScript features more strictly. For us, perhaps the most important is the already-familiar noImplicitAny. It prevents implicitly setting type any, which can for example happen if you don't type the parameters of a function. Details about the rest of the configurations can be found in the tsconfig documentation. Using strict is suggested by the official documentation.
+
+https://www.staging-typescript.org/tsconfig#strict
+
+ installing express and, of course, also @types/express and eslint
+ ```
+ npm install express
+npm install --save-dev eslint @types/express @typescript-eslint/eslint-plugin @typescript-eslint/parser
+```
+package.json should look like this:
+```
+{
+  "name": "flight_diary",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "tsc": "tsc"
+  },
+  "author": "Jane Doe",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/express": "^4.17.13",
+    "@typescript-eslint/eslint-plugin": "^5.12.1",
+    "@typescript-eslint/parser": "^5.12.1",
+    "eslint": "^8.9.0",
+    "typescript": "^4.5.5"
+  },
+  "dependencies": {
+    "express": "^4.17.3"
+  }
+}
+```
+We also create an .eslintrc file with the following content:
+```
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "browser": true,
+    "es6": true,
+    "node": true
+  },
+  "rules": {
+    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-unsafe-member-access": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "no-case-declarations": "off"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
+```
+install ts-node-dev:
+
+`npm install --save-dev ts-node-dev`
+
+ define a few more npm scripts, and voilà, we are ready to begin:
+```
+{
+  // ...
+  "scripts": {
+    "tsc": "tsc",
+    "dev": "ts-node-dev index.ts",
+    "lint": "eslint --ext .ts ."
+  },
+  // ...
+}
+```
