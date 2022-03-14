@@ -1,6 +1,8 @@
 # TypeScript
 TypeScript, Fullstack courses part 9
 
+## Settin thing up
+
 You can install both ts-node and the official typescript package globally by running:
 
 `npm install -g ts-node typescript` 
@@ -55,3 +57,15 @@ and set up scripts within the package.json:
 You can now use ts-node within this directory by running npm run ts-node. Note that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with --. So if you want to run file.ts with ts-node, the whole command is:
 
 `npm run ts-node -- file.ts`
+
+You can access TypeScript's official playground here:https://www.typescriptlang.org/play
+
+The tsconfig.json file is used to define how the TypeScript compiler should interpret the code, how strictly the compiler should work, which files to watch or ignore, and much much more. For now we will only use the compiler option noImplicitAny, that does not require to have types for all variables used.https://www.typescriptlang.org/docs/handbook/tsconfig-json.html
+
+```
+{
+  "compilerOptions":{
+    "noImplicitAny": false
+  }
+}
+```
