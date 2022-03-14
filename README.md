@@ -3,7 +3,7 @@ TypeScript, Fullstack courses part 9
 
 https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
 
-## Settin thing up
+## Setting up
 
 You can install both ts-node and the official typescript package globally by running:
 
