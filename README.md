@@ -183,6 +183,23 @@ try {
   }
 }
 ```
+```
+{
+  "compilerOptions": {
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "strictBindCallApply": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "esModuleInterop": true,
+    "declaration": true,
+  }
+}
+```
 https://www.staging-typescript.org/tsconfig
 http://json.schemastore.org/tsconfig
 
@@ -224,3 +241,113 @@ Install types for express
 always use this method in the frontend. If import does not work, try a combined method: import ... = require('...').
 
 If it is absolutely impossible to get rid of an unused variable, you can prefix it with an underscore to inform the compiler you have thought about it and there is nothing you can do.  Rename the req variable to _req. 
+
+To simplify the development, we should enable auto-reloading to improve our workflow. In this course, you have already used nodemon, but ts-node has an alternative called ts-node-dev. It is meant to be used only with a development environment which takes care of recompilation on every change, so restarting the application won't be necessary.
+
+# auto-reloading development environment
+Let's install ts-node-dev to our development dependencies:
+`npm install --save-dev ts-node-dev`
+Add a script to package.json:
+```
+{
+  // ...
+  "scripts": {
+      // ...
+      "dev": "ts-node-dev index.ts",
+  },
+  // ...
+}
+```
+And now, by running npm run dev, we have a working, auto-reloading development environment for our project!
+
+# Query parameters
+http://localhost:3002/bmi?height=180&weight=72
+
+http://expressjs.com/en/5x/api.html#req.query
+```
+app.get('/bmi', (_req, res) => { 
+res.json(calculateBmi( Number(_req.query.height), Number(_req.query.weight)));
+});
+
+`
+# Any``
+configuration rule noImplicitAny exists on compiler level, and it is highly recommended to keep it on at all times. In the rare occasions when you truly cannot know what the type of a variable is, you should explicitly state that in the code:
+
+const a : any = /* no clue what the type will be! */
+
+# Eslint
+
+`npm install --save-dev eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser`
+
+We will configure eslint to disallow explicit any. Write the following rules to .eslintrc:
+```
+{
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "ecmaVersion": 11,
+    "sourceType": "module"
+  },
+  "plugins": ["@typescript-eslint"],
+  "rules": {
+    "@typescript-eslint/no-explicit-any": 2
+  }
+}
+```
+(Newer versions of eslint has this rule on by default, so you don't necessarily need to add it separately.)
+
+Let us also set up a lint npm script to inspect the files with .ts extension by modifying the package.json file:
+```
+{
+  // ...
+  "scripts": {
+      "start": "ts-node index.ts",
+      "dev": "ts-node-dev index.ts",
+      "lint": "eslint --ext .ts ."
+      //  ...
+  },
+  // ...
+}
+```
+Now lint will complain if we try to define a variable of type any
+
+https://github.com/typescript-eslint/typescript-eslint
+
+So we will use the following .eslintrc
+```
+{
+  "extends": [
+    "eslint:recommended",
+    "plugin:@typescript-eslint/recommended",
+    "plugin:@typescript-eslint/recommended-requiring-type-checking"
+  ],
+  "plugins": ["@typescript-eslint"],
+  "env": {
+    "node": true,
+    "es6": true
+  },
+  "rules": {
+    "@typescript-eslint/semi": ["error"],
+    "@typescript-eslint/explicit-function-return-type": "off",
+    "@typescript-eslint/explicit-module-boundary-types": "off",
+    "@typescript-eslint/restrict-template-expressions": "off",
+    "@typescript-eslint/restrict-plus-operands": "off",
+    "@typescript-eslint/no-unused-vars": [
+      "error",
+      { "argsIgnorePattern": "^_" }
+    ],
+    "no-case-declarations": "off"
+  },
+  "parser": "@typescript-eslint/parser",
+  "parserOptions": {
+    "project": "./tsconfig.json"
+  }
+}
+```
+Wdisable some ESlint rules to get the data from the request body:
+
+Disabling @typescript-eslint/no-unsafe-assignment for the destructuring assignment is nearly enough:
+```
+app.post('/calculate', (req, res) => {
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment 
+  const { value1, value2, op } = req.body;
+ ```
