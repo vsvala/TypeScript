@@ -3,6 +3,8 @@ TypeScript, Fullstack courses part 9
 
 https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
 
+types for existing packages can be found from the @types organization: http://definitelytyped.org/
+
 ## Setting up
 
 Install TypeScript support to your editor of choice. Visual Studio Code works natively with TypeScript.
@@ -88,4 +90,77 @@ try {
   }
   console.log(errorMessage);
 }
+```
+NB: Since the typings are only used before compilation, the typings are not needed in the production build and they should always be in the devDependencies of the package.json.
+
+Since version 10.0 ts-node has defined @types/node as a peer rependency. If the version of npm is at least 7.0, the peer dependencies of a project automatically installed by then npm. If you have an older npm, the peer dependency must be installed explicitly:
+`npm install --save-dev @types/node`
+
+#Improving the project
+Next, let's add npm scripts to run our two programs multiplier and calculator:
+```
+{
+  "name": "fs-open",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "scripts": {
+    "ts-node": "ts-node",
+    "multiply": "ts-node multiplier.ts",
+    "calculate": "ts-node calculator.ts"
+  },
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "ts-node": "^10.5.0",
+    "typescript": "^4.5.5"
+  }
+}
+```
+We can get the multiplier to work with command-line parameters with the following changes:
+```
+const multiplicator = (a: number, b: number, printText: string) => {
+  console.log(printText,  a * b);
+}
+
+const a: number = Number(process.argv[2])
+const b: number = Number(process.argv[3])
+multiplicator(a, b, `Multiplied ${a} and ${b}, the result is:`);
+```
+And we can run it with:
+`npm run multiply 5 2`
+
+```
+interface MultiplyValues {
+  value1: number;
+  value2: number;
+}
+
+const parseArguments = (args: Array<string>): MultiplyValues => {
+  if (args.length < 4) throw new Error('Not enough arguments');
+  if (args.length > 4) throw new Error('Too many arguments');
+
+  if (!isNaN(Number(args[2])) && !isNaN(Number(args[3]))) {
+    return {
+      value1: Number(args[2]),
+      value2: Number(args[3])
+    }
+  } else {
+    throw new Error('Provided values were not numbers!');
+  }
+}
+
+const multiplicator = (a: number, b: number, printText: string) => {
+  console.log(printText,  a * b);
+}
+
+try {
+  const { value1, value2 } = parseArguments(process.argv);
+  multiplicator(value1, value2, `Multiplied ${value1} and ${value2}, the result is:`);
+} catch (error: unknown) {
+  let errorMessage = 'Something bad happened.'
+  if (error instanceof Error) {
+    errorMessage += ' Error: ' + error.message;
+  }
+  console.log(errorMessage);
 ```
