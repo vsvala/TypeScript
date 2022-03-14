@@ -5,6 +5,10 @@ https://www.typescriptlang.org/docs/handbook/typescript-from-scratch.html
 
 types for existing packages can be found from the @types organization: http://definitelytyped.org/
 
+updating typeScript 
+
+`npm install -g typescript@latest`
+
 ## Setting up
 
 Install TypeScript support to your editor of choice. Visual Studio Code works natively with TypeScript.
