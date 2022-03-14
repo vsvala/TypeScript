@@ -269,8 +269,8 @@ app.get('/bmi', (_req, res) => {
 res.json(calculateBmi( Number(_req.query.height), Number(_req.query.weight)));
 });
 
-`
-# Any``
+```
+# Any
 configuration rule noImplicitAny exists on compiler level, and it is highly recommended to keep it on at all times. In the rare occasions when you truly cannot know what the type of a variable is, you should explicitly state that in the code:
 
 const a : any = /* no clue what the type will be! */
