@@ -39,6 +39,12 @@ and set up scripts within the package.json:
   // ..
 }
 ```
+We can now initialise our tsconfig.json settings by running:
+
+`npm run tsc -- --init`
+
+Note the extra -- before the actual argument! Arguments before -- are interpreted as being for the npm command, while the ones after that are meant for the command that is run through the script (i.e. tsc in this case).
+
 You can now use ts-node within this directory by running npm run ts-node. Note that if you are using ts-node through package.json, all command-line arguments for the script need to be prefixed with --. So if you want to run file.ts with ts-node, the whole command is:
 
 `npm run ts-node -- file.ts`
